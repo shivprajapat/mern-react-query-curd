@@ -26,8 +26,8 @@ const BooksList = () => {
   }
   return (
     <section>
-      <div className='d-flex align-items-center justify-content-between'>
-        <h1>Book List</h1>
+      <div className='d-flex align-items-center justify-content-between flex-wrap mb-3'>
+        <h1 className='mb-1'>Book List</h1>
         <input type="search" value={search} onChange={handleOnChange} />
       </div>
       <Row>
