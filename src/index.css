@@ -51,3 +51,6 @@ nav .nav-link:first-child{
   display: block !important;
   font-weight: 600;
 }
+input{
+  outline: none;
+}

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Row, Spinner } from 'react-bootstrap'
 import { useQuery } from 'react-query'
 import { BookItem } from '../../components'
 import { getAllBooks } from '../../query/api'
 
 const BooksList = () => {
+  const [search, setSearch] = useState("");
+
+  const handleOnChange = (e) => {
+    setSearch(e.target.value.toLowerCase())
+  }
 
   const { data, isLoading, isError, error } = useQuery('books', getAllBooks);
 
@@ -21,15 +26,32 @@ const BooksList = () => {
   }
   return (
     <section>
-      <h1>Book List</h1>
+      <div className='d-flex align-items-center justify-content-between'>
+        <h1>Book List</h1>
+        <input type="search" value={search} onChange={handleOnChange} />
+      </div>
       <Row>
         {
-          data?.map(({ title, author, id }) => (
+          data.filter((el) => {
+            if (el === "") {
+              return el;
+            }
+            else {
+              return el.title.toLowerCase().includes(search) || el.author.toLowerCase().includes(search);
+            }
+          }).map(({ title, author, id }) => (
             <Col xxl={4} md={6} key={id}>
               <BookItem title={title} author={author} id={id} />
             </Col>
           ))
         }
+        {/* {
+          data?.map(({ title, author, id }) => (
+            <Col xxl={4} md={6} key={id}>
+              <BookItem title={title} author={author} id={id} />
+            </Col>
+          ))
+        } */}
       </Row>
     </section>
   )
